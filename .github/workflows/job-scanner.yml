@@ -1,0 +1,25 @@
+name: 📦 Job Scanner — Coimbra
+
+on:
+  schedule:
+    # Corre todos os dias às 09:00 Lisboa (08:00 UTC)
+    - cron: "0 8 * * *"
+  workflow_dispatch: # permite correr manualmente
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run job scraper
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: node scraper.js

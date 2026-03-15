@@ -4,10 +4,10 @@ Corre todos os dias de manhã e manda uma notificação para o Slack com vagas n
 
 ## Como funciona
 
-- Vai ao **Indeed PT** e **Net-Empregos** e procura vagas recentes (últimos 7 dias)
+- Vai ao **Indeed PT**, **LinkedIn** e **Net-Empregos** e procura vagas recentes (últimos 7 dias)
 - Filtra por palavras-chave relevantes (armazém, entregador, transportadora, etc.)
-- Remove duplicados
-- Manda um resumo para o Slack via Incoming Webhook
+- Remove duplicados entre as três fontes
+- Manda um resumo para o Slack via Incoming Webhook, com indicação da fonte (🔵 LinkedIn · 🟡 Indeed · 🟢 Net-Empregos)
 
 ## Setup
 
@@ -45,7 +45,8 @@ Vai ao separador **Actions** no GitHub → **📦 Job Scanner — Coimbra** → 
 
 Edita o ficheiro `scraper.js` para ajustar:
 
-- **`SEARCHES`** — os termos de pesquisa
+- **`SEARCHES`** — termos de pesquisa para Indeed
+- **`LINKEDIN_SEARCHES`** — termos de pesquisa para LinkedIn
 - **`KEYWORDS_GOOD`** — palavras que tornam uma vaga relevante
 - **`KEYWORDS_BAD`** — palavras que filtram vagas não relevantes
 - **Cron schedule** — no ficheiro `.github/workflows/job-scanner.yml`

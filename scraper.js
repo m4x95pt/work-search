@@ -352,20 +352,7 @@ function sendSlackMessage(payload) {
 }
 
 function buildSlackPayload(jobs) {
-  if (jobs.length === 0) {
-    return {
-      text: "📦 *Job Scanner — Coimbra*",
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: "📦 *Job Scanner — Coimbra*\n\nNenhuma vaga nova encontrada hoje. Continua à espera! 🤞",
-          },
-        },
-      ],
-    };
-  }
+  if (jobs.length === 0) return null;
 
   const blocks = [
     {
@@ -447,7 +434,12 @@ async function main() {
     unique.forEach((j) => console.log(`  - ${j.title} @ ${j.company} (${j.location})`));
   }
 
-  // Send to Slack
+  // Send to Slack — apenas se houver vagas
+  if (unique.length === 0) {
+    console.log("ℹ️ Nenhuma vaga encontrada — notificação Slack não enviada.");
+    return;
+  }
+
   const payload = buildSlackPayload(unique);
   await sendSlackMessage(payload);
   console.log("\n📨 Notificação enviada para o Slack!");

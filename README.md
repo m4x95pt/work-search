@@ -1,65 +1,79 @@
-# 📦 Job Scanner — Coimbra
+# work-search
 
-Corre todos os dias de manhã e manda uma notificação para o Slack com vagas novas de **armazém, logística e entregas** em Coimbra.
+## Overview
 
-## Como funciona
+**work-search** is a JavaScript web app designed to streamline and automate job-hunting. It collects, aggregates, and tracks job opportunities from multiple sources, providing filtering, reminders, and a central dashboard for all your applications.
 
-- Vai ao **Indeed PT**, **LinkedIn** e **Net-Empregos** e procura vagas recentes (últimos 7 dias)
-- Filtra por palavras-chave relevantes (armazém, entregador, transportadora, etc.)
-- Remove duplicados entre as três fontes
-- Manda um resumo para o Slack via Incoming Webhook, com indicação da fonte (🔵 LinkedIn · 🟡 Indeed · 🟢 Net-Empregos)
+## Features
 
-## Setup
+- **Job Aggregation:** Collects job postings from popular sites and company feeds.
+- **Filtering & Search:** Filter jobs by keywords, company, location, salary, or tags.
+- **Application Tracker:** Save jobs to your dashboard and mark application status (applied, interview, rejected, etc).
+- **Notifications:** Set up browser/email alerts for new matches or deadlines.
+- **Custom Sources:** Add or configure new feeds with JSON, RSS, or API support.
+- **Export/Import:** Download your tracked jobs as CSV or JSON; migrate your dashboard anywhere.
+- **Simple UI:** Clean web interface with sortable tables and powerful search.
 
-### 1. Criar o Slack Webhook
+## Getting Started
 
-1. Vai a [api.slack.com/apps](https://api.slack.com/apps) → **Create New App** → **From scratch**
-2. Ativa **Incoming Webhooks** → **Add New Webhook to Workspace**
-3. Escolhe o canal (ex: `#empregos`) → copia o Webhook URL
+1. **Clone the repository**
 
-### 2. Adicionar o secret no GitHub
+   ```bash
+   git clone https://github.com/m4x95pt/work-search
+   cd work-search
+   ```
 
-No teu repositório → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
+2. **Open with any browser**
+   - Double-click `index.html` _(or run with a local server for best results, e.g. `python -m http.server`)_.
+   - No back-end required: all client-side JavaScript.
 
-| Name | Value |
-|------|-------|
-| `SLACK_WEBHOOK_URL` | `https://hooks.slack.com/services/...` |
+3. **Configuration**
+   - Edit `config.js` or similar to add custom sources, keywords, and notification settings.
+   - Example:
+     ```js
+     export default {
+       sources: [
+         "https://jobs.github.com/positions.json",
+         "https://remoteok.com/api",
+         // Add more feeds here
+       ],
+       keywords: ["python", "remote", "developer", "intern"],
+       notificationEmail: "your-email@example.com",
+     };
+     ```
 
-### 3. Fazer push do código
+4. **Usage**
+   - Use filters/search to find relevant jobs.
+   - Click "Save" to track jobs to your dashboard.
+   - Update status and notes as you progress in applications.
+   - Export your results for record-keeping.
 
-```bash
-git init
-git add .
-git commit -m "feat: job scraper Coimbra"
-git remote add origin https://github.com/SEU_USER/job-scanner-coimbra.git
-git push -u origin main
+## Example Workflow
+
+- Open site, enter search keywords.
+- Review listings, save interesting jobs.
+- Use dashboard to track applications.
+- Set reminders for follow-up/interview dates.
+
+## Project Structure
+
+```
+work-search/
+├── index.html        # Main app interface
+├── main.js           # Core app logic
+├── config.js         # Data source/keyword config
+├── style.css         # Styling
+├── assets/           # Icons, images, etc
 ```
 
-O GitHub Actions vai correr automaticamente todos os dias às **09:00 hora de Lisboa**.
+## Customization
 
-### Correr manualmente
+- Extend sources in `config.js` for new job boards.
+- Adjust filters or dashboard columns in `main.js` for your needs.
+- Integrate with external notification services for advanced reminders.
 
-Vai ao separador **Actions** no GitHub → **📦 Job Scanner — Coimbra** → **Run workflow**.
+## License
 
-## Personalizar
+MIT License
 
-Edita o ficheiro `scraper.js` para ajustar:
-
-- **`SEARCHES`** — termos de pesquisa para Indeed
-- **`LINKEDIN_SEARCHES`** — termos de pesquisa para LinkedIn
-- **`KEYWORDS_GOOD`** — palavras que tornam uma vaga relevante
-- **`KEYWORDS_BAD`** — palavras que filtram vagas não relevantes
-- **Cron schedule** — no ficheiro `.github/workflows/job-scanner.yml`
-
-## Exemplo de notificação Slack
-
-```
-📦 Job Scanner — 3 vaga(s) nova(s) em Coimbra!
-
-🔗 Operador de Armazém
-🏢 DPD Portugal · 📍 Coimbra
-
-🔗 Entregador Part-Time
-🏢 CTT · 📍 Coimbra
-...
-```
+**Author:** [@m4x95pt](https://github.com/m4x95pt)
